@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="refresh" content="0.5">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг среды Arduino</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4285F4;
+            --temp-color: #EA4335;
+            --humid-color: #34A853;
+            --press-color: #FBBC05;
+            --text-dark: #202124;
+            --text-light: #5F6368;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .data-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .data-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            padding-bottom: 15px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        .header .icon {
+            font-size: 28px;
+            margin-right: 12px;
+            color: var(--primary);
+        }
+        
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 18px 0;
+            padding: 12px 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.02);
+            transition: background 0.3s ease;
+        }
+        
+        .data-row:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        
+        .label {
+            font-size: 16px;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+        
+        .value {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .temp .value { color: var(--temp-color); }
+        .humid .value { color: var(--humid-color); }
+        .press .value { color: var(--press-color); }
+        
+        .unit {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-left: 3px;
+        }
+        
+        .timestamp {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            background: var(--primary);
+            color: white;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="data-card">
+            <div class="header">
+                <div class="icon">🌡️</div>
+                <h1>Мониторинг среды <span class="status-badge">LIVE</span></h1>
+            </div>
+            
+            <div class="data-row temp">
+                <span class="label">Температура</span>
+                <div>
+                    <span class="value">{{ temp }}</span>
+                    <span class="unit">°C</span>
+                </div>
+            </div>
+            
+            <div class="data-row humid">
+                <span class="label">Влажность</span>
+                <div>
+                    <span class="value">{{ humid }}</span>
+                    <span class="unit">%</span>
+                </div>
+            </div>
+            
+            <div class="data-row press">
+                <span class="label">Давление</span>
+                <div>
+                    <span class="value">{{ press }}</span>
+                    <span class="unit">мм рт.ст.</span>
+                </div>
+            </div>
+            
+            <div class="data-row">
+                <span class="label">Время устройства</span>
+                <span class="value">{{ time }}</span>
+            </div>
+            
+            <div class="timestamp">
+                Последнее обновление: {{ received_at }}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
